@@ -1,0 +1,1 @@
+export const KAKAO_APP_KEY = 'YOUR_KAKAO_APP_KEY';

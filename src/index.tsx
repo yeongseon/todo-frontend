@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import 'bootstrap/dist/css/bootstrap.css';  // Bootstrap CSS¸¦ importÇÕ´Ï´Ù.
+import 'bootstrap/dist/css/bootstrap.css';  // Bootstrap CSSï¿½ï¿½ importï¿½Õ´Ï´ï¿½.
 
 
 const root = ReactDOM.createRoot(
