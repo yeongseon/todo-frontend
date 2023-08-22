@@ -1,21 +1,26 @@
-import React, { useEffect, ReactElement } from 'react';
+// App.tsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './AuthContext';
-import NavigationBar from './Navbar';
-import { KAKAO_APP_KEY } from './config';
+import Home from './Home';
+import NavigationBar from './NavigationBar';
+import KakaoAuthRedirect from './KakaoAuthRedirect';
+import Todos from './Todos';
 
-function App(): ReactElement {
-  useEffect(() => {
-    if (!window.Kakao.isInitialized()) {  // Kakao가 초기화되지 않았다면 초기화를 수행
-      window.Kakao.init(KAKAO_APP_KEY);
-  }
+function App() {
 
-  }, []);
-
-    return (
-        <AuthProvider>
-            <NavigationBar />
-        </AuthProvider>
-    );
+  return (
+    <AuthProvider>
+      <Router>
+        <NavigationBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/auth/kakao/callback" element={<KakaoAuthRedirect />} />
+          <Route path="/todos" element={<Todos />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
+  );
 }
 
 export default App;

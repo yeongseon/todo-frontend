@@ -1,27 +1,33 @@
-import React, { useState, createContext, useContext, ReactNode } from 'react';
+// AuthContext.tsx
+import React, { createContext, useContext, useState } from 'react';
 
-interface AuthContextType {
-    isLoggedIn: boolean;
-    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+interface IAuthContext {
+  isLoggedIn: boolean;
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  user: any;
+  setUser: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+interface AuthProviderProps {
+    children: React.ReactNode;
+  }
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const value = { isLoggedIn, setIsLoggedIn };
+const AuthContext = createContext<IAuthContext>({
+  isLoggedIn: false,
+  setIsLoggedIn: () => {},
+  user: null,
+  setUser: () => {},
+});
+
+export const useAuth = () => useContext(AuthContext);
+
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [user, setUser] = useState(null);
 
     return (
-        <AuthContext.Provider value={value}>
-            {children}
-        </AuthContext.Provider>
-    );
-}
-
-export function useAuth() {
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error('useAuth must be used within an AuthProvider');
-    }
-    return context;
-}
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, setUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
